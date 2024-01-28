@@ -2,3 +2,5 @@ streamlit
 matplotlib
 numpy
 skimage
+io
+color
