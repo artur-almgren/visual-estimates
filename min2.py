@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
+from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 
 def segment_image_pca_kmeans(image, n_clusters, n_components):
