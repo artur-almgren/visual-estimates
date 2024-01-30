@@ -2,8 +2,24 @@ import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
-from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
 
+def segment_image_pca_kmeans(image, n_clusters, n_components):
+    # Reshape the image to a 2D array of pixels
+    pixel_values = image.reshape((-1, 3))
+    pixel_values = np.float32(pixel_values)
+
+    # Apply PCA
+    pca = PCA(n_components=n_components)
+    transformed = pca.fit_transform(pixel_values)
+
+    # Apply KMeans clustering on PCA-transformed data
+    kmeans = KMeans(n_clusters=n_clusters, random_state=0)
+    labels = kmeans.fit_predict(transformed)
+
+    # Convert labels to image
+    labels = labels.reshape(image.shape[:2])
+    return labels
 def load_image(image_path):
     image = cv2.imread(image_path)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -62,6 +78,16 @@ def main():
                 image = load_image(selected_image)
                 labels = segment_image_kmeans(image, n_clusters, color_space)
                 display_segmentation(image, labels)
-
+    with tab3:
+        st.write("PCA + K-Means segmentation options...")
+        selected_image = st.selectbox("Select an Image for PCA + K-Means", ['calco.jpg', 'other_images'], key='pca_kmeans')
+        n_clusters = st.slider("Number of Clusters", 2, 10, 3, key='pca_kmeans')
+        n_components = st.slider("Number of PCA Components", 1, 3, 2, key='pca_kmeans')
+    
+        if st.button('Segment Image using PCA + K-Means'):
+            if selected_image:
+                image = load_image(selected_image)
+                labels = segment_image_pca_kmeans(image, n_clusters, n_components)
+                display_segmentation(image, labels)
 if __name__ == "__main__":
     main()
