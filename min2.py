@@ -77,9 +77,9 @@ def main():
 
     with tab2:
         st.write("K-Means segmentation options...")
-        selected_image_kmeans = st.selectbox("Select an Image for K-Means", ['calco.jpg', 'other_images'], key='kmeans')
-        n_clusters_kmeans = st.slider("Number of Clusters", 2, 10, 3, key='kmeans')
-        color_space_kmeans = st.selectbox("Color Space", ['RGB', 'HSV', 'LAB'], key='kmeans')
+        selected_image_kmeans = st.selectbox("Select an Image for K-Means", ['calco.jpg', 'other_images'], key='image_select_kmeans')
+        n_clusters_kmeans = st.slider("Number of Clusters", 2, 10, 3, key='n_clusters_kmeans')
+        color_space_kmeans = st.selectbox("Color Space", ['RGB', 'HSV', 'LAB'], key='color_space_kmeans')
 
         if st.button('Segment Image with K-Means'):
             if selected_image_kmeans:
@@ -89,9 +89,9 @@ def main():
 
     with tab3:
         st.write("PCA + K-Means segmentation options...")
-        selected_image_pca = st.selectbox("Select an Image for PCA + K-Means", ['calco.jpg', 'other_images'], key='pca_kmeans')
-        n_clusters_pca = st.slider("Number of Clusters", 2, 10, 3, key='pca_kmeans')
-        n_components_pca = st.slider("Number of PCA Components", 1, 3, 2, key='pca_kmeans')
+        selected_image_pca = st.selectbox("Select an Image for PCA + K-Means", ['calco.jpg', 'other_images'], key='image_select_pca')
+        n_clusters_pca = st.slider("Number of Clusters", 2, 10, 3, key='n_clusters_pca')
+        n_components_pca = st.slider("Number of PCA Components", 1, 3, 2, key='n_components_pca')
 
         if st.button('Segment Image with PCA + K-Means'):
             if selected_image_pca:
